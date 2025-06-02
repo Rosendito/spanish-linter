@@ -109,7 +109,7 @@ def is_spanish(text, debug=False):
         return False, 0
 
 
-def check_file(filepath, debug=False):
+def check_file(filepath, comments_only=False, debug=False):
     results = []
     try:
         with open(filepath, "r", encoding="utf-8", errors="ignore") as f:
@@ -127,12 +127,14 @@ def check_file(filepath, debug=False):
                     if "*/" in line:
                         in_block_comment = False
                     continue
-                for match in STRING_REGEX.finditer(line):
-                    full_string = match.group(0)  # La cadena completa con comillas
-                    cleaned = full_string[1:-1]   # Quitar las comillas de inicio y final
-                    is_es, confidence = is_spanish(cleaned, debug)
-                    if is_es:
-                        results.append((filepath, lineno, cleaned, "es", confidence))
+                # Only process strings if comments_only is False
+                if not comments_only:
+                    for match in STRING_REGEX.finditer(line):
+                        full_string = match.group(0)  # La cadena completa con comillas
+                        cleaned = full_string[1:-1]   # Quitar las comillas de inicio y final
+                        is_es, confidence = is_spanish(cleaned, debug)
+                        if is_es:
+                            results.append((filepath, lineno, cleaned, "es", confidence))
                 match = INLINE_COMMENT_REGEX.search(line)
                 if match:
                     comment = match.group(1).strip()
@@ -168,13 +170,17 @@ def should_exclude_file(file_path, exclude_patterns):
               help="Glob patterns for paths to exclude.")
 @click.option("--exclude-pattern", "-p", multiple=True,
               help="Regex patterns to exclude from Spanish detection.")
+@click.option("--comments-only", "-c", is_flag=True, 
+              help="Only analyze comments, ignore strings in quotes.")
 @click.option("--debug", is_flag=True, help="Show debug information with detected language and confidence.")
-def main(path, include, exclude, exclude_pattern, debug):
+def main(path, include, exclude, exclude_pattern, comments_only, debug):
     """
     spanish-linter: Detects unintended Spanish in code strings or comments.
     """
     if debug:
         print(f"DEBUG: Starting with path={path}, debug={debug}")
+        if comments_only:
+            print("DEBUG: Comments-only mode enabled - ignoring strings in quotes")
     ensure_model()
 
     if WHITELIST_FILE.exists():
@@ -205,7 +211,7 @@ def main(path, include, exclude, exclude_pattern, debug):
     for file in filtered_files:
         if debug:
             print(f"DEBUG: Checking file {file}")
-        file_matches = check_file(file, debug)
+        file_matches = check_file(file, comments_only, debug)
         if debug:
             print(f"DEBUG: File {file} produced {len(file_matches)} matches")
         matches.extend(file_matches)
