@@ -9,7 +9,7 @@ description = "CLI tool to detect unintended Spanish in code comments or strings
 authors = [{name = "Simón"}]
 readme = "readme.md"
 requires-python = ">=3.8"
-dependencies = ["fasttext", "click"]
+dependencies = ["fasttext", "click", "numpy<2.0"]
 
 [project.scripts]
 spanish-linter = "spanish_linter.cli:main"

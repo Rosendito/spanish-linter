@@ -1,2 +1,3 @@
 fasttext
 click
+numpy<2.0
