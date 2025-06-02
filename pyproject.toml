@@ -1,9 +1,13 @@
+[build-system]
+requires = ["setuptools>=45", "wheel"]
+build-backend = "setuptools.build_meta"
+
 [project]
 name = "spanish-linter"
 version = "0.1.0"
 description = "CLI tool to detect unintended Spanish in code comments or strings"
 authors = [{name = "Simón"}]
-readme = "README.md"
+readme = "readme.md"
 requires-python = ">=3.8"
 dependencies = ["fasttext", "click"]
 

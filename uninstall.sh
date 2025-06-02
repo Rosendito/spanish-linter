@@ -4,7 +4,7 @@ set -e
 echo "🧹 Uninstalling spanish-linter..."
 
 PACKAGE_NAME="spanish-linter"
-INSTALL_DIR="$HOME/.local/$PACKAGE_NAME"
+INSTALL_DIR="$HOME/spanish_linter"
 MODEL_PATH="$HOME/.models/fasttext/lid.176.bin"
 
 # Uninstall from pipx if installed
