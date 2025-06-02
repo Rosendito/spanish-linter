@@ -15,7 +15,7 @@ INLINE_COMMENT_REGEX = re.compile(r"""(?://|#)\s*(.+)""")
 BLOCK_COMMENT_LINE_REGEX = re.compile(r"""^\s*\*?\s*(.+)""")
 
 EXCLUDED_PATTERNS_DEFAULT = [
-    r"localhost", r"PHP_URL_HOST", r"MAIL_HOST", r"APP_URL", r"[A-Z_]{2,}",
+    r"localhost", r"PHP_URL_HOST", r"MAIL_HOST", r"APP_URL",
 ]
 
 excluded_patterns = []
@@ -127,9 +127,9 @@ def check_file(filepath, debug=False):
                     if "*/" in line:
                         in_block_comment = False
                     continue
-                for match in STRING_REGEX.findall(line):
-                    full_match = match[0]
-                    cleaned = full_match.strip("\"'")
+                for match in STRING_REGEX.finditer(line):
+                    full_string = match.group(0)  # La cadena completa con comillas
+                    cleaned = full_string[1:-1]   # Quitar las comillas de inicio y final
                     is_es, confidence = is_spanish(cleaned, debug)
                     if is_es:
                         results.append((filepath, lineno, cleaned, "es", confidence))
