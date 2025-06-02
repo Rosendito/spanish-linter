@@ -1,0 +1,11 @@
+[project]
+name = "spanish-linter"
+version = "0.1.0"
+description = "CLI tool to detect unintended Spanish in code comments or strings"
+authors = [{name = "Simón"}]
+readme = "README.md"
+requires-python = ">=3.8"
+dependencies = ["fasttext", "click"]
+
+[project.scripts]
+spanish-linter = "spanish_linter.cli:main"
