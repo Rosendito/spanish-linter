@@ -6,7 +6,7 @@ import fasttext
 import urllib.request
 
 MODEL_URL = "https://dl.fbaipublicfiles.com/fasttext/supervised-models/lid.176.bin"
-MODEL_PATH = Path.home() / ".cache" / "fasttext" / "lid.176.bin"
+MODEL_PATH = Path.home() / ".models" / "fasttext" / "lid.176.bin"
 WHITELIST_FILE = Path(".spanish-linter-whitelist")
 
 STRING_REGEX = re.compile(r"""(["'])(?:(?=(\\?))\2.)*?\1""")

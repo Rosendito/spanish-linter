@@ -4,6 +4,8 @@
 
 This tool is useful for enforcing consistent language use in multilingual or English-only codebases. It scans source files for Spanish content using a fastText model, and allows fine-grained control via glob filters, regex excludes, and a whitelist.
 
+**Model**: Uses Facebook's fastText `lid.176.bin` language detection model (176 languages supported). The model downloads automatically on first use (~917MB) to `~/.models/fasttext/` and runs offline with 50% confidence threshold.
+
 ---
 
 ## 🚀 Installation

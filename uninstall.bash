@@ -5,7 +5,7 @@ echo "🧹 Uninstalling spanish-linter..."
 
 PACKAGE_NAME="spanish-linter"
 INSTALL_DIR="$HOME/.local/$PACKAGE_NAME"
-MODEL_PATH="$HOME/.cache/fasttext/lid.176.bin"
+MODEL_PATH="$HOME/.models/fasttext/lid.176.bin"
 
 # Uninstall from pipx if installed
 if command -v pipx >/dev/null; then
